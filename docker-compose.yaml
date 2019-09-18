@@ -19,6 +19,7 @@ services:
   
   elasticsearch:
     image: elasticsearch:6.4.0
-    restart: always
-    expose:
-      - 9200
+
+  redis:
+    image: redis:4
+    command: redis-server
