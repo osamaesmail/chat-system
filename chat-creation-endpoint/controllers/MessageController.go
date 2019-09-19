@@ -20,7 +20,7 @@ type Message struct {
 func (controller MessageController) Post(c echo.Context) error {
 	token := c.Param("token")
 	chatNumber := c.Param("chat_number")
-	message := new (Message)
+	message := new(Message)
 
 	if err := c.Bind(message); err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
