@@ -6,7 +6,7 @@ import (
 )
 
 func redisClint() *redis.Client {
-	redisConnectionString := "redis:6379"
+	redisConnectionString := "localhost:6379"
 
 	client := redis.NewClient(&redis.Options{
 		Addr: redisConnectionString,

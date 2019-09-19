@@ -1,10 +1,9 @@
-FROM golang:1.12
+FROM golang:latest
 
-ADD . /go/src/chat-creation-endpoint
 WORKDIR /go/src/chat-creation-endpoint
-
+ADD . .
 RUN go get .
-RUN go build
+RUN GOOS=linux go build -a -o build .
 
 EXPOSE 3001
 
