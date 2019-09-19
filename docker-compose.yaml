@@ -1,25 +1,33 @@
 version: '3.2'
 services:
-  db:
-    image: mysql:5.7
-    env_file: .env
-    ports:
-      - "3306:3306"
-
   chat-app:
     build: ./chat-app
     env_file: .env
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - ./chat-app:/chat-app
-    ports:
-      - "3000:3000"
     depends_on:
       - db
+      - elasticsearch
+      - redis
+    ports:
+      - 3000:3000
+
+  chat-creation-endpoint:
+    build: ./chat-creation-endpoint
+    volumes:
+      - ./chat-creation-endpoint:/go/src/chat-creation-endpoint
+    depends_on:
+      - redis
+    ports:
+      - 3001:3001
+      
+  db:
+    image: mysql:5.7
+    env_file: .env
   
   elasticsearch:
     image: elasticsearch:6.4.0
 
   redis:
-    image: redis:4
-    command: redis-server
+    image: redis:alpine
